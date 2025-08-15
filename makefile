@@ -1,6 +1,6 @@
 # Change these variables as necessary.
-MAIN_PACKAGE_PATH := ./cmd/app-name
-BINARY_NAME := app-name
+MAIN_PACKAGE_PATH := ./cmd/control-visitas-garitas
+BINARY_NAME := control-visitas-garitas
 
 MIGRATIONS := ./db/migrations
 DB := ./data/db.sqlite
@@ -37,7 +37,7 @@ no-dirty:
 	git diff --exit-code
 
 .PHONY: install-golangci-lint
-install-tools: tidy
+install-golangci-lint: tidy
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(shell go env GOPATH)/bin v1.63.4
 
 

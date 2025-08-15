@@ -6,7 +6,7 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/Polo123456789/golang-web-template/internal/http"
+	"github.com/Polo123456789/control-visitas-garitas/internal/http"
 )
 
 func main() {

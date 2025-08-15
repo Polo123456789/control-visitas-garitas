@@ -1,4 +1,4 @@
-module github.com/Polo123456789/golang-web-template
+module github.com/Polo123456789/control-visitas-garitas
 
 go 1.24.5
 

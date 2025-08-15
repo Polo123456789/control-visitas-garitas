@@ -4,7 +4,7 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/Polo123456789/golang-web-template/internal/templates"
+	"github.com/Polo123456789/control-visitas-garitas/internal/templates"
 )
 
 func setupRoutes(
