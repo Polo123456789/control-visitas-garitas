@@ -3,18 +3,25 @@ package templates
 templ Dashboard() {
 	@layout("Verificar Codigos") {
 		<h1>Validar Codigo</h1>
+		<h3 aria-busy="true" id="loading-indicator" class="htmx-indicator">Validando, porfavor espere ...</h3>
 		<div id="reader" style="width: min(80vw, 540px)"></div>
 		<form
 			id="code-form"
 			hx-trigger="got-code"
 			hx-post="/guard/validate"
 			hx-target="#validation-target"
+			hx-indicator="#loading-indicator"
 		>
 			<input type="hidden" name="code" id="code"/>
 		</form>
 		<div id="validation-target"></div>
 		<script>
+			var validating = false;
 			function onScanSuccess(decodedText, decodedResult) {
+				if (validating) {
+					return;
+				}
+				validating = true;
 				document.getElementById("code").value = decodedText;
 				htmx.trigger("#code-form", "got-code");
 			}
@@ -37,7 +44,7 @@ templ ValidCodeDialog() {
 			</header>
 			<p>El código ingresado es válido, proceda a dar ingreso</p>
 			<footer>
-				<button class="secondary" onclick="this.closest('dialog').close()">Cerrar</button>
+				<button class="secondary" onclick="this.closest('dialog').close(); validating = false">Cerrar</button>
 			</footer>
 		</article>
 	</dialog>
@@ -52,7 +59,7 @@ templ InvalidCodeDialog(reason string) {
 			<p>El código ingresado no es válido.</p>
 			<p><strong>Motivo:</strong> { reason }</p>
 			<footer>
-				<button class="secondary" onclick="this.closest('dialog').close()">Cerrar</button>
+				<button class="secondary" onclick="this.closest('dialog').close(); validating = false">Cerrar</button>
 			</footer>
 		</article>
 	</dialog>
