@@ -1,0 +1,41 @@
+package templates
+
+templ Dashboard() {
+	@layout("Dashboard") {
+		<h3>Bienvenido 'Vecino'</h3>
+		<form
+			hx-boost="true"
+			action="/neighbor/create-visit"
+			method="POST"
+			x-data="{
+				limitUses: false
+			}"
+		>
+			<p><b>Crear una visita a 00-00</b></p>
+			<fieldset>
+				<label for="name">Nombre del visitante</label>
+				<input type="text" name="name" id="name" placeholder="Nombre del visitante" required/>
+				<small>Para verificacion en garita</small>
+			</fieldset>
+			<fieldset>
+				<label for="start">Valido Desde:</label>
+				<input type="date" name="start" id="start" required/>
+				<small>Fecha en la que el codigo empeza a ser valido</small>
+			</fieldset>
+			<fieldset>
+				<label for="end">Valido Hasta:</label>
+				<input type="date" name="end" id="end" required/>
+				<small>Fecha en la que el codigo deja de ser valido</small>
+			</fieldset>
+			<fieldset>
+				<label for="limitUses">Limitar Usos</label>
+				<input type="checkbox" name="limitUses" id="limitUses" x-model="limitUses"/>
+			</fieldset>
+			<fieldset x-show="limitUses" x-transition>
+				<label for="maxUses">Usos Maximos</label>
+				<input type="number" name="maxUses" id="maxUses" value="1" min="1" step="1" required/>
+			</fieldset>
+			<button type="submit">Crear Codigo</button>
+		</form>
+	}
+}

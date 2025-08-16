@@ -1,0 +1,40 @@
+package templates
+
+templ ShareCode() {
+	@layout("Compartir Código") {
+		<article>
+			<header>
+				<h3>Compartir Código</h3>
+				<p>Toma una captura de pantalla y compártela con <b>Visitante</b></p>
+			</header>
+			<section class="container">
+				<div>
+					<div>
+						<section id="qrcode"></section>
+						<input
+							type="text"
+							value="11cff407-ef97-4631-ab40-e063127226db"
+							style="width: min(80vw, 320px);"
+							readonly
+						/>
+					</div>
+				</div>
+			</section>
+			<footer>
+				<small>El código es válido hasta la fecha y tiene un máximo de X usos.</small>
+			</footer>
+		</article>
+		<script>
+			// QR code
+			const size = Math.min(window.innerWidth * 0.8, 320);
+			var qrcode = new QRCode(document.getElementById("qrcode"), {
+				text: "11cff407-ef97-4631-ab40-e063127226db",
+				width: size,
+				height: size,
+				colorDark: "#000000",
+				colorLight: "#ffffff",
+				correctLevel: QRCode.CorrectLevel.H
+			});
+		</script>
+	}
+}
