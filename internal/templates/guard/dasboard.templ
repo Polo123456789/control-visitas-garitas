@@ -4,23 +4,56 @@ templ Dashboard() {
 	@layout("Verificar Codigos") {
 		<h1>Validar Codigo</h1>
 		<div id="reader" style="width: min(80vw, 540px)"></div>
+		<form
+			id="code-form"
+			hx-trigger="got-code"
+			hx-post="/guard/validate"
+			hx-target="#validation-target"
+		>
+			<input type="hidden" name="code" id="code"/>
+		</form>
+		<div id="validation-target"></div>
 		<script>
 			function onScanSuccess(decodedText, decodedResult) {
-			  // handle the scanned code as you like, for example:
-				alert("Codigo Valido/invalido")
+				document.getElementById("code").value = decodedText;
+				htmx.trigger("#code-form", "got-code");
 			}
 
-			function onScanFailure(error) {
-			  // handle scan failure, usually better to ignore and keep scanning.
-			  // for example:
-			  console.warn(`Code scan error = ${error}`);
-			}
+			function onScanFailure(error) {}
 
 			let html5QrcodeScanner = new Html5QrcodeScanner(
-			  "reader",
-			  { fps: 10, qrbox: {width: 250, height: 250} },
-			  /* verbose= */ false);
+			  "reader", { fps: 10, qrbox: {width: 250, height: 250} }, false
+			);
 			html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 		</script>
 	}
+}
+
+templ ValidCodeDialog() {
+	<dialog open>
+		<article>
+			<header>
+				<h3>✔️ Código válido</h3>
+			</header>
+			<p>El código ingresado es válido, proceda a dar ingreso</p>
+			<footer>
+				<button class="secondary" onclick="this.closest('dialog').close()">Cerrar</button>
+			</footer>
+		</article>
+	</dialog>
+}
+
+templ InvalidCodeDialog(reason string) {
+	<dialog open>
+		<article>
+			<header>
+				<h3>❌ Código inválido</h3>
+			</header>
+			<p>El código ingresado no es válido.</p>
+			<p><strong>Motivo:</strong> { reason }</p>
+			<footer>
+				<button class="secondary" onclick="this.closest('dialog').close()">Cerrar</button>
+			</footer>
+		</article>
+	</dialog>
 }

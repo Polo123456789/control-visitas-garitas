@@ -16,5 +16,17 @@ func Handle(
 		_ = templates.Dashboard().Render(r.Context(), w)
 	})
 
+	mux.HandleFunc("POST /guard/validate", func(w http.ResponseWriter, r *http.Request) {
+		code := r.FormValue("code")
+
+		if code == "11cff407-ef97-4631-ab40-e063127226db" {
+			_ = templates.ValidCodeDialog().Render(r.Context(), w)
+			return
+		}
+
+		_ = templates.InvalidCodeDialog("Motivo XD").Render(r.Context(), w)
+		return
+	})
+
 	return mux
 }

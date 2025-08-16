@@ -25,16 +25,18 @@ templ ShareCode() {
 			</footer>
 		</article>
 		<script>
-			// QR code
 			const size = Math.min(window.innerWidth * 0.8, 320);
-			var qrcode = new QRCode(document.getElementById("qrcode"), {
-				text: "11cff407-ef97-4631-ab40-e063127226db",
+			const qrCode = new QRCodeStyling({
 				width: size,
 				height: size,
-				colorDark: "#000000",
-				colorLight: "#ffffff",
-				correctLevel: QRCode.CorrectLevel.H
+				type: "svg",
+				data: "11cff407-ef97-4631-ab40-e063127226db",
+				dotsOptions: {
+					color: "#4267b2",
+					type: "rounded"
+				},
 			});
+			qrCode.append(document.getElementById("qrcode"));
 		</script>
 	}
 }
